@@ -1,0 +1,24 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "EggermontRob/LAMP"
+  
+  config.ssh.username = "root"
+  config.ssh.password = "Projecten2"
+  config.vm.network "public_network"
+
+
+ 
+   config.vm.provider "virtualbox" do |vb|
+     vb.memory = "2048"
+     vb.name= "LAMP CLI"
+	
+   end
+   print "Do you want to install Drupal?[Y/n]"
+   drupal = STDIN.gets.chomp
+   print "Do you want to install WordPress?[Y/n]"
+   wordpress = STDIN.gets.chomp
+config.vm.provision :shell, :path => "LAMP.sh", :privileged => true, :args => ["#{drupal}","#{wordpress}"]
+   
+end

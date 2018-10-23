@@ -1,0 +1,22 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "EggermontRob/WISA"
+  config.vm.network "public_network"
+  config.vm.communicator = "winrm"
+  config.winrm.username = "Administrator"
+  config.winrm.password = "Projecten2"
+   config.vm.provider "virtualbox" do |vb|
+     vb.memory = "2048"
+     vb.name = "WISA GUI"
+   end
+  print "New username: "
+  user = STDIN.gets.chomp
+  print "New password: "
+  pass = STDIN.gets.chomp
+  print "New database: "
+  database = STDIN.gets.chomp
+  print "\n"
+   config.vm.provision :shell, :path => "wisa.ps1", :privileged => true, :args => ["#{user}","#{pass}","#{database}"]
+end
